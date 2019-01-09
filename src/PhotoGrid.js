@@ -1,63 +1,112 @@
 import React from "react";
 
-class PhotoGrid extends Component {
-   
-    // When the component mounts, load the next dog to be displayed
-    // componentDidMount() {
-    //   this.loadNextDog();
-    // }
-  
-    // handleBtnClick = event => {
-    //   // Get the data-value of the clicked button
-    //   const btnType = event.target.attributes.getNamedItem("data-value").value;
-    //   // Clone this.state to the newState object
-    //   // We'll modify this object and use it to set our component's state
-    //   const newState = { ...this.state };
-  
-    //   if (btnType === "pick") {
-    //     // Set newState.match to either true or false depending on whether or not the dog likes us (1/5 chance)
-    //     newState.match = 1 === Math.floor(Math.random() * 5) + 1;
-  
-    //     // Set newState.matchCount equal to its current value or its current value + 1 depending on whether the dog likes us
-    //     newState.matchCount = newState.match
-    //       ? newState.matchCount + 1
-    //       : newState.matchCount;
-    //   } else {
-    //     // If we thumbs down'ed the dog, we haven't matched with it
-    //     newState.match = false;
-    //   }
-    //   // Replace our component's state with newState, load the next dog image
-    //   this.setState(newState);
-    //   this.loadNextDog();
-    // };
-  
-    // loadNextDog = () => {
-    //   API.getRandomDog()
-    //     .then(res =>
-    //       this.setState({
-    //         image: res.data.message
-    //       })
-    //     )
-    //     .catch(err => console.log(err));
-    // };
-  
-    render() {
-      return (
-        <div>
-          {/* <h1 className="text-center">Make N</h1>
-          <h3 className="text-center">
-            Thumbs up on any pups you'd like to meet!
-          </h3> */}
-          {/* <Card image={this.state.image} handleBtnClick={this.handleBtnClick} /> */}
-          {/* <h1 className="text-center">
-            Made friends with {this.state.matchCount} pups so far!
-          </h1> */}
-          {/* <Alert style={{ opacity: this.state.match ? 1 : 0 }} type="success">
-            Yay! That Pup Liked You Too!!!
-          </Alert> */}
-        </div>
-      );
-    }
-  }
+function PhotoGrid(){
+const imgUrls = ['https://source.unsplash.com/PC_lbSSxCZE/800x600','https://source.unsplash.com/lVmR1YaBGG4/800x600','https://source.unsplash.com/5KvPQc1Uklk/800x600','https://source.unsplash.com/GtYFwFrFbMA/800x600','https://source.unsplash.com/Igct8iZucFI/800x600','https://source.unsplash.com/M01DfkOqz7I/800x600','https://source.unsplash.com/MoI_cHNcSK8/800x600','https://source.unsplash.com/M0WbGFRTXqU/800x600','https://source.unsplash.com/s48nn4NtlZ4/800x600','https://source.unsplash.com/E4944K_4SvI/800x600','https://source.unsplash.com/F5Dxy9i8bxc/800x600','https://source.unsplash.com/iPum7Ket2jo/800x600'
+];
 
-  export default PhotoGrid;
+class Gallery extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { currentIndex: null };
+    this.closeModal = this.closeModal.bind(this);
+    this.findNext = this.findNext.bind(this);
+    this.findPrev = this.findPrev.bind(this);
+    this.renderImageContent = this.renderImageContent.bind(this);
+  }
+  renderImageContent(src, index) {
+    return (
+      <div onClick={(e) => this.openModal(e, index)}>
+        <img src={src} key={src} />
+      </div>
+    ) 
+  }
+//   openModal(e, index) {
+//     this.setState ({ currentIndex: index });
+//   }
+//   closeModal(e) {
+//     if (e != undefined) {
+//       e.preventDefault();
+//     }
+//     this.setState ({ currentIndex: null });
+//   }
+//   findPrev(e) {
+//     if (e != undefined) {
+//       e.preventDefault();
+//     }
+//     this.setState(prevState => ({
+//       currentIndex: prevState.currentIndex -1
+//     }));
+//   }
+//   findNext(e) {
+//     if (e != undefined) {
+//       e.preventDefault();
+//     }
+//     this.setState(prevState => ({
+//       currentIndex: prevState.currentIndex + 1
+//     }));
+//   }
+//   render() {
+//     return (
+//       <div className="gallery-container">
+//         <h1>🔥 This Gallery Is Lit 🔥</h1>
+//         <div className="gallery-grid">
+//           {imgUrls.map(this.renderImageContent)}
+//         </div>
+//         <GalleryModal 
+//           closeModal={this.closeModal} 
+//           findPrev={this.findPrev} 
+//           findNext={this.findNext} 
+//           hasPrev={this.state.currentIndex > 0} 
+//           hasNext={this.state.currentIndex + 1 < imgUrls.length} 
+//           src={imgUrls[this.state.currentIndex]} 
+//         />
+//       </div>
+//     )
+//   }
+// }
+
+// class GalleryModal extends React.Component {
+//   constructor() {
+//     super();
+//     this.handleKeyDown = this.handleKeyDown.bind(this);
+//   }
+//   componentDidMount() {
+//     document.body.addEventListener('keydown', this.handleKeyDown);
+//   }  
+//   componentWillUnMount() {
+//     document.body.removeEventListener('keydown', this.handleKeyDown);
+//   }
+//   handleKeyDown(e) {
+//     if (e.keyCode === 27)
+//       this.props.closeModal();
+//     if (e.keyCode === 37 && this.props.hasPrev)
+//       this.props.findPrev();
+//     if (e.keyCode === 39 && this.props.hasNext)
+//       this.props.findNext();
+//   }
+//   render () {
+//     const { closeModal, hasNext, hasPrev, findNext, findPrev, src } = this.props;
+//     if (!src) {
+//       console.log('whut')
+//       return null;
+//     }
+//     return (
+//       <div>
+//         <div className="modal-overlay" onClick={closeModal}></div>
+//         <div isOpen={!!src} className="modal">
+//           <div className='modal-body'>
+//             <a href="#" className='modal-close' onClick={closeModal} onKeyDown={this.handleKeyDown}>&times;</a>
+//             {hasPrev && <a href="#" className='modal-prev' onClick={findPrev} onKeyDown={this.handleKeyDown}>&lsaquo;</a>}
+//             {hasNext && <a href="#" className='modal-next' onClick={findNext} onKeyDown={this.handleKeyDown}>&rsaquo;</a>}
+//             <img src={src} />
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   }
+// }
+
+//ReactDOM.render(<Gallery />, document.querySelector('.gallery-container'));
+}
+
+export default PhotoGrid;
