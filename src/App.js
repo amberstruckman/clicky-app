@@ -30,12 +30,7 @@ class App extends Component {
         return (
             <div className="container">
                 <Nav />
-                {/* <Table */}
-                    {/* characterData={characters} */}
-                    {/* removeCharacter={this.removeCharacter} */}
-                />
-                {/* <h3>Add New</h3> */}
-                {/* <Form handleSubmit={this.handleSubmit} /> */}
+                
                 <PhotoGrid />
                 <Footer />
             </div>
