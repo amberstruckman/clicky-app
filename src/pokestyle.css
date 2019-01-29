@@ -679,3 +679,23 @@ caption {
   =============== */
 /* Layout
   =============== */
+
+  .click-item {
+    width: 20%;
+    display: inline-block;
+    margin: 25px 2.5%;
+    max-height: 250px;
+    cursor: pointer;
+}
+.click-item img{
+  text-align: center;
+  border: 0;
+  width: auto;
+  height: 100%;
+  max-height: 200px;
+}
+.score {
+    font-family: Times, 'Times New Roman', serif;
+    font-weight: normal;
+    font-size: 1.25em;
+}
